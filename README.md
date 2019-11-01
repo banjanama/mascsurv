@@ -5,7 +5,7 @@
 <!-- badges: end -->
 
 
-*A small analysis about the masculinity survey by fivethirtyeight*
+*A small analysis about the masculinity survey by [fivethirtyeight](https://fivethirtyeight.com/)*
 
 This is a small project as part of the Uni course **fossos** at the Friedrich-Alexander-University Erlangen-Nuremberg. 
 The data set can be found [here](https://data.fivethirtyeight.com/) and there
