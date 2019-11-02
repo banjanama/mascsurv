@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Actions Status](https://github.com/banjanama/mascsurv/workflows/Render and Deploy RMarkdown Website/badge.svg)](https://github.com/banjanama/mascsurv/actions)
+[![Actions Status](https://github.com/banjanama/mascsurv/workflows/Render%20and%20Deploy%20RMarkdown%20Website/badge.svg)](https://github.com/banjanama/mascsurv/actions)
 <!-- badges: end -->
 
 
