@@ -1,0 +1,6 @@
+name: "mascsurv"
+navbar:
+  title: "A Survey on Masculinity"
+  left:
+    - text: "Home"
+      href: index.html
