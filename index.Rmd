@@ -1,4 +1,4 @@
-
+---
 title: "An Analysis of a Survey on Masculinity"
 author: "Natascha Otto"
 date: "1 11 2019"
@@ -22,7 +22,6 @@ data <- data %>%
   rename(mascImportance = q0002, sexBoundaries_tooFar = q0021_0001, sexBoundaries_talkFriend = q0021_0002, 
          sexBoundaries_talkEx = q0021_0003, sexBoundaries_none = q0021_0004, marriageStatus = q0024, age = age3)
 data
-
 ```
 
 
