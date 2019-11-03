@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 raw_data <- readr::read_csv(file = "data/raw_responses.csv")
 library(tidyr)
+library(forcats)
 
 data <- raw_data %>%
   select(q0002, q0021_0001, q0021_0002, q0021_0003, q0021_0004, q0024, age3) %>%
@@ -32,12 +33,33 @@ data <- raw_data %>%
     sexBoundaries_talkFriend = sexBoundaries_talkFriend != "Not selected",
     sexBoundaries_talkEx = sexBoundaries_talkEx != "Not selected",
     sexBoundaries_none = sexBoundaries_none != "Not selected",
+  ) %>%
+  mutate(
+    mascImportance = ordered(
+      x = mascImportance, 
+      levels = c("Very important", "Somewhat important", "Not too important", "Not at all important", "No answer")
+    ),
+    age = ordered(
+      x = age,
+      levels = c("18 - 34", "35 - 64", "65 and up")
+    )
   )
 
 data
 
-
-
 ```
 
+
+## Plots
+
+```{r}
+library(ggplot2)
+g <- ggplot(
+  data = data,
+  mapping = aes(x = age, y = mascImportance)
+)
+g <- g + geom_count()
+g
+
+```
 
