@@ -13,15 +13,31 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(dplyr)
-data <- readr::read_csv(file = "data/raw_responses.csv")
+raw_data <- readr::read_csv(file = "data/raw_responses.csv")
 library(tidyr)
 
-
-data <- data %>%
+data <- raw_data %>%
   select(q0002, q0021_0001, q0021_0002, q0021_0003, q0021_0004, q0024, age3) %>%
-  rename(mascImportance = q0002, sexBoundaries_tooFar = q0021_0001, sexBoundaries_talkFriend = q0021_0002, 
-         sexBoundaries_talkEx = q0021_0003, sexBoundaries_none = q0021_0004, marriageStatus = q0024, age = age3)
+  rename(
+    mascImportance = q0002, 
+    sexBoundaries_tooFar = q0021_0001, 
+    sexBoundaries_talkFriend = q0021_0002, 
+    sexBoundaries_talkEx = q0021_0003, 
+    sexBoundaries_none = q0021_0004, 
+    marriageStatus = q0024, 
+    age = age3
+  ) %>% 
+  mutate(
+    sexBoundaries_tooFar = sexBoundaries_tooFar != "Not selected",
+    sexBoundaries_talkFriend = sexBoundaries_talkFriend != "Not selected",
+    sexBoundaries_talkEx = sexBoundaries_talkEx != "Not selected",
+    sexBoundaries_none = sexBoundaries_none != "Not selected",
+  )
+
 data
+
+
+
 ```
 
 
