@@ -1,5 +1,5 @@
----
-title: "Survey on Masculinity"
+
+title: "An Analysis of a Survey on Masculinity"
 author: "Natascha Otto"
 date: "1 11 2019"
 output: html_document
@@ -9,22 +9,20 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r}
+library(dplyr)
+data <- readr::read_csv(file = "data/raw_responses.csv")
+library(tidyr)
 
-```{r cars}
-summary(cars)
+
+data <- data %>%
+  select(q0002, q0021_0001, q0021_0002, q0021_0003, q0021_0004, q0024, age3) %>%
+  rename(mascImportance = q0002, sexBoundaries_tooFar = q0021_0001, sexBoundaries_talkFriend = q0021_0002, 
+         sexBoundaries_talkEx = q0021_0003, sexBoundaries_none = q0021_0004, marriageStatus = q0024, age = age3)
+data
+
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
