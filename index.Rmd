@@ -5,13 +5,16 @@ date: "1 11 2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, echo=FALSE, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
 
-```{r}
+```{r, echo=FALSE}
+#In this chunk I selected and cleaned up certain variables from the raw data set
+#and proceeded to create a new data frame to work with.
+
 library(dplyr)
 raw_data <- readr::read_csv(file = "data/raw_responses.csv")
 library(tidyr)
@@ -50,16 +53,118 @@ data
 ```
 
 
-## Plots
+## The importance of being seen as masculine
+### This part conveys how important it is to men to be seen as masculine in form of a bar chart.
+
+```{r}
+#This chunk conveys how important it is to men to be seen as masculine in form 
+#of a bar chart.
+
+## Plot
+library(ggplot2)
+a <- ggplot(
+  data = data, 
+  mapping = aes(x = mascImportance, fill = mascImportance)
+) + geom_bar(alpha = 0.5)
+print(a) #had to use print function bc RStudio didn't print plot automatically 
+
+```
+
+
+## Age and the importance of being seen as masculine 
+### This part depicts the correlation between age and the importance of being seen as masculine via a crosstable and a plot.
+
+```{r}
+#This chunk depicts the correlation between age and the importance of being 
+#seen as masculine via a crosstable and a plot.
+
+## Crosstable 
+importanceAge <- with (data, table(age, mascImportance))
+(importanceAge <- round(addmargins(prop.table(importanceAge)*100), 2))
+
+##  Plot
+library(ggplot2)
+b <- ggplot(
+  data = data,
+  mapping = aes(x = age, y = mascImportance, colour = mascImportance)
+) + geom_count(alpha = 0.5) 
+print(b)
+
+```
+
+
+## How sexual boundaries were gauged in the last 12 months 
+
+```{r}
+#This chunk deals with the question how the interviewed men gauged sexual boundaries
+#in the last 12 months. To guarantee an easier work flow and because the question 
+#was designed to have the option of multiple choice answers and was therefore depicted
+#with a variable for each question, I decided to select the relevant variables and
+#combine them in a smaller data frame dedicaded to the topic of sexual boundaries. 
+#Later on I also decided to recode each variable into factors for nicer plots.
+
+
+library(dplyr)
+library(tidyr)
+sexBoundaries <- raw_data %>%
+  select(q0021_0001, q0021_0002, q0021_0003, q0021_0004) %>%
+  rename(
+    sexBoundaries_tooFar = q0021_0001, 
+    sexBoundaries_talkFriend = q0021_0002, 
+    sexBoundaries_talkEx = q0021_0003, 
+    sexBoundaries_none = q0021_0004) 
+
+sexBoundaries$sexBoundaries_tooFar <- factor(sexBoundaries$sexBoundaries_tooFar, levels = c("Wondered whether you pushed a partner too far in a past sexual encounter.", "Not selected"), labels = c("yes", "no")) 
+
+sexBoundaries$sexBoundaries_talkFriend <- factor(sexBoundaries$sexBoundaries_talkFriend, levels = c("Talked with a friend or friends about whether you pushed a partner too far.", "Not selected"), labels = c("yes", "no"))
+
+sexBoundaries$sexBoundaries_talkEx <- factor(sexBoundaries$sexBoundaries_talkEx, levels = c("Contacted a past sexual partner to ask whether you went too far in any of you sexual encounters.","Not selected"), labels = c("yes", "no"))
+
+sexBoundaries$sexBoundaries_none <- factor(sexBoundaries$sexBoundaries_none, levels = c("None of the above", "Not selected"), labels = c("yes", "no"))
+
+```
+
+### Plot for those who wondered whether they pushed a partner to far in a past sexual encounter
 
 ```{r}
 library(ggplot2)
-g <- ggplot(
-  data = data,
-  mapping = aes(x = age, y = mascImportance)
-)
-g <- g + geom_count()
-g
 
+c <- ggplot(data = sexBoundaries,
+            mapping = aes(sexBoundaries_tooFar, fill = sexBoundaries_tooFar)
+) + geom_bar(alpha = 0.5)
+print(c)
+```
+
+### Plot for those who talked to friends about whether they pushed a partner too far
+
+```{r}
+library(ggplot2)
+
+d <- ggplot(data = sexBoundaries,
+            mapping = aes(sexBoundaries_talkFriend, fill = sexBoundaries_talkFriend)
+) + geom_bar(alpha = 0.5)
+print(d)
+```
+
+### Plot for those who talked to an Ex about whether they pushed a partner too far
+
+```{r}
+library(ggplot2)
+
+e <- ggplot(data = sexBoundaries,
+            mapping = aes(sexBoundaries_talkEx, fill = sexBoundaries_talkEx)
+) + geom_bar(alpha = 0.5)
+print(e)
+```
+
+### Plot for those who didn't do any of the above
+
+```{r}
+library(ggplot2)
+
+f <- ggplot(data = sexBoundaries, 
+            mapping = aes(sexBoundaries_none, fill = sexBoundaries_none)
+) + geom_bar(alpha = 0.5)
+print(f)
 ```
 
