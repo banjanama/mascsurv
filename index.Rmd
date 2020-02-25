@@ -3,18 +3,24 @@ title: "An Analysis of a Survey on Masculinity"
 author: "Natascha Otto"
 date: "1 11 2019"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, echo=FALSE, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+# this is where you could also disable the message outputs from some of the below chunks
 ```
 
 
-
 ```{r, echo=FALSE}
-#In this chunk I selected and cleaned up certain variables from the raw data set
-#and proceeded to create a new data frame to work with.
+# TODO maybe write these nice descriptions in the text so that readers can read them? 
+# they seem pretty close to a writeup of the analysis.
+# In this chunk I selected and cleaned up certain variables from the raw data set
+# and proceeded to create a new data frame to work with.
+# technically as per http://style.tidyverse.org there should be a single space after 3
 
+# these library calls are causing some spurious output; you might want to place these calls in the above chunk and then silence that chunk
 library(dplyr)
 raw_data <- readr::read_csv(file = "data/raw_responses.csv")
 library(tidyr)
@@ -47,9 +53,6 @@ data <- raw_data %>%
       levels = c("18 - 34", "35 - 64", "65 and up")
     )
   )
-
-data
-
 ```
 
 
@@ -62,12 +65,11 @@ data
 
 ## Plot
 library(ggplot2)
-a <- ggplot(
+ggplot(
   data = data, 
   mapping = aes(x = mascImportance, fill = mascImportance)
-) + geom_bar(alpha = 0.5)
-print(a) #had to use print function bc RStudio didn't print plot automatically 
-
+) + 
+  geom_bar(alpha = 0.5)
 ```
 
 
@@ -79,17 +81,15 @@ print(a) #had to use print function bc RStudio didn't print plot automatically
 #seen as masculine via a crosstable and a plot.
 
 ## Crosstable 
-importanceAge <- with (data, table(age, mascImportance))
-(importanceAge <- round(addmargins(prop.table(importanceAge)*100), 2))
+importanceAge <- with(data, table(age, mascImportance))
+importanceAge <- round(addmargins(prop.table(importanceAge)*100), 2)
 
 ##  Plot
-library(ggplot2)
-b <- ggplot(
+ggplot(
   data = data,
   mapping = aes(x = age, y = mascImportance, colour = mascImportance)
-) + geom_count(alpha = 0.5) 
-print(b)
-
+) + 
+  geom_count(alpha = 0.5) 
 ```
 
 
@@ -104,8 +104,6 @@ print(b)
 #combine them in a smaller data frame dedicaded to the topic of sexual boundaries. 
 #Later on I also decided to recode each variable into factors for nicer plots.
 
-
-library(dplyr)
 library(tidyr)
 sexBoundaries <- raw_data %>%
   select(q0021_0001, q0021_0002, q0021_0003, q0021_0004) %>%
@@ -115,57 +113,77 @@ sexBoundaries <- raw_data %>%
     sexBoundaries_talkEx = q0021_0003, 
     sexBoundaries_none = q0021_0004) 
 
-sexBoundaries$sexBoundaries_tooFar <- factor(sexBoundaries$sexBoundaries_tooFar, levels = c("Wondered whether you pushed a partner too far in a past sexual encounter.", "Not selected"), labels = c("yes", "no")) 
+sexBoundaries$sexBoundaries_tooFar <- factor(
+  sexBoundaries$sexBoundaries_tooFar, 
+  levels = c(
+    "Wondered whether you pushed a partner too far in a past sexual encounter.", 
+    "Not selected"
+  ), 
+  labels = c("yes", "no")
+)
 
-sexBoundaries$sexBoundaries_talkFriend <- factor(sexBoundaries$sexBoundaries_talkFriend, levels = c("Talked with a friend or friends about whether you pushed a partner too far.", "Not selected"), labels = c("yes", "no"))
+sexBoundaries$sexBoundaries_talkFriend <- factor(
+  sexBoundaries$sexBoundaries_talkFriend, 
+  levels = c(
+    "Talked with a friend or friends about whether you pushed a partner too far.", 
+    "Not selected"
+  ), 
+  labels = c("yes", "no")
+)
 
-sexBoundaries$sexBoundaries_talkEx <- factor(sexBoundaries$sexBoundaries_talkEx, levels = c("Contacted a past sexual partner to ask whether you went too far in any of you sexual encounters.","Not selected"), labels = c("yes", "no"))
+sexBoundaries$sexBoundaries_talkEx <- factor(
+  sexBoundaries$sexBoundaries_talkEx, 
+  levels = c(
+    "Contacted a past sexual partner to ask whether you went too far in any of you sexual encounters.",
+    "Not selected"
+  ), 
+  labels = c("yes", "no")
+)
 
-sexBoundaries$sexBoundaries_none <- factor(sexBoundaries$sexBoundaries_none, levels = c("None of the above", "Not selected"), labels = c("yes", "no"))
-
+sexBoundaries$sexBoundaries_none <- factor(
+  sexBoundaries$sexBoundaries_none, 
+  levels = c("None of the above", "Not selected"), 
+  labels = c("yes", "no")
+)
 ```
 
 ### Plot for those who wondered whether they pushed a partner too far in a past sexual encounter
 
 ```{r}
-library(ggplot2)
-
-c <- ggplot(data = sexBoundaries,
-            mapping = aes(sexBoundaries_tooFar, fill = sexBoundaries_tooFar)
-) + geom_bar(alpha = 0.5)
-print(c)
+ggplot(
+  data = sexBoundaries,
+  mapping = aes(sexBoundaries_tooFar, fill = sexBoundaries_tooFar)
+) + 
+  geom_bar(alpha = 0.5)
 ```
 
 ### Plot for those who talked to friends about whether they pushed a partner too far
 
 ```{r}
-library(ggplot2)
-
-d <- ggplot(data = sexBoundaries,
-            mapping = aes(sexBoundaries_talkFriend, fill = sexBoundaries_talkFriend)
-) + geom_bar(alpha = 0.5)
-print(d)
+ggplot(
+  data = sexBoundaries,
+  mapping = aes(sexBoundaries_talkFriend, fill = sexBoundaries_talkFriend)
+) + 
+  geom_bar(alpha = 0.5)
 ```
 
 ### Plot for those who talked to an Ex about whether they pushed a partner too far
 
 ```{r}
-library(ggplot2)
-
-e <- ggplot(data = sexBoundaries,
-            mapping = aes(sexBoundaries_talkEx, fill = sexBoundaries_talkEx)
-) + geom_bar(alpha = 0.5)
-print(e)
+ggplot(
+  data = sexBoundaries,
+  mapping = aes(sexBoundaries_talkEx, fill = sexBoundaries_talkEx)
+) + 
+  geom_bar(alpha = 0.5)
 ```
 
 ### Plot for those who didn't do any of the above
 
 ```{r}
-library(ggplot2)
-
-f <- ggplot(data = sexBoundaries, 
-            mapping = aes(sexBoundaries_none, fill = sexBoundaries_none)
-) + geom_bar(alpha = 0.5)
-print(f)
+ggplot(
+  data = sexBoundaries, 
+  mapping = aes(sexBoundaries_none, fill = sexBoundaries_none)
+) + 
+  geom_bar(alpha = 0.5)
 ```
 
