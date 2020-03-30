@@ -94,7 +94,7 @@ print(b)
 
 
 ## How sexual boundaries were gauged in the last 12 months 
-#### This part shows how men estimated whether they pushed a partner too far in a past sexual encounter
+### This part shows how men estimated whether they pushed a partner too far in a past sexual encounter
 
 ```{r}
 #This chunk deals with the question how the interviewed men gauged sexual boundaries
@@ -125,7 +125,7 @@ sexBoundaries$sexBoundaries_none <- factor(sexBoundaries$sexBoundaries_none, lev
 
 ```
 
-### Plot for those who wondered whether they pushed a partner too far in a past sexual encounter
+#### 1. Plot for those who wondered whether they pushed a partner too far in a past sexual encounter
 
 ```{r}
 library(ggplot2)
@@ -136,7 +136,7 @@ c <- ggplot(data = sexBoundaries,
 print(c)
 ```
 
-### Plot for those who talked to friends about whether they pushed a partner too far
+#### 2. Plot for those who talked to friends about whether they pushed a partner too far
 
 ```{r}
 library(ggplot2)
@@ -147,7 +147,7 @@ d <- ggplot(data = sexBoundaries,
 print(d)
 ```
 
-### Plot for those who talked to an Ex about whether they pushed a partner too far
+#### 3. Plot for those who talked to an Ex about whether they pushed a partner too far
 
 ```{r}
 library(ggplot2)
@@ -158,7 +158,7 @@ e <- ggplot(data = sexBoundaries,
 print(e)
 ```
 
-### Plot for those who didn't do any of the above
+#### 4. Plot for those who didn't do any of the above
 
 ```{r}
 library(ggplot2)
