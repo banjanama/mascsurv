@@ -6,12 +6,12 @@ output: html_document
 ---
 
 ```{r setup, echo=FALSE, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE}
 #In this chunk I selected and cleaned up certain variables from the raw data set
 #and proceeded to create a new data frame to work with.
 
@@ -54,9 +54,10 @@ data
 
 # The importance of being seen as masculine
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 #This chunk conveys how important it is to men to be seen as masculine in form 
-#of a bar chart.
+#of a bar chart. I avoided the overplotted axis labels by simply removing the 
+#quite unnecessary legend - might be a crude method, but it worked. 
 
 ## Plot
 library(ggplot2)
@@ -66,7 +67,7 @@ a <- ggplot(
                 show.legend = FALSE)
 ) + geom_bar(alpha = 0.5) + 
   labs(
-  title = "The importance of being seen as masculine", 
+  title = "How important is it to men to be seen as masculine?", 
   x = "Importance of being seen as masculine", 
   y = "Count", 
   fill = "Importance of being seen as masculine") + 
@@ -92,8 +93,7 @@ b <- ggplot(
   mapping = aes(x = age, y = mascImportance, colour = mascImportance)
 ) + geom_count(alpha = 0.5) + 
   labs(
-    title = "Age and the importance of being seen as masculine",
-    subtitle = "This part depicts the correlation between age and the importance of being seen as masculine",
+    title = "Age and how important it is to men to be seen as masculine",
     x = "Age",
     y = "Importance of being seen as masculine",
     colour = "Importance of being seen as masculine"
@@ -113,6 +113,9 @@ print(b)
 #with a variable for each question, I decided to select the relevant variables and
 #combine them in a smaller data frame dedicaded to the topic of sexual boundaries. 
 #Later on I also decided to recode each variable into factors for nicer plots.
+#I also decided to pare the plots down to the minimum and thus removed the 
+#self-explanatory legends (which only contained the information which color describes
+#yes and no) and the x-axis label (which was identical to the title)
 
 
 library(dplyr)
@@ -145,14 +148,12 @@ c <- ggplot(data = sexBoundaries,
 ) + geom_bar(alpha = 0.5) +
   labs(
     title = "1. Wondered whether they pushed a partner too far",
-    x = "Wondered whether they pushed a partner too far",
     y = "Count",
     fill = "Wondered whether they pushed a partner too far"
   ) + 
-  theme(legend.position = "none")
+  theme(legend.position = "none", axis.title.x = element_blank())
 print(c)
 
-#might remove tags on the side bc they take up too much space & are unneccessary
 
 ```
 
@@ -166,11 +167,10 @@ d <- ggplot(data = sexBoundaries,
 ) + geom_bar(alpha = 0.5) +
   labs(
     title = "2. Talked to friends about whether they pushed a partner too far",
-    x = "Talked to friends about whether they pushed a partner too far",
     y = "Count",
     fill = "Talked to friends about whether they pushed a partner too far"
   ) +
-  theme(legend.position = "none")
+  theme(legend.position = "none", axis.title.x = element_blank())
 print(d)
 ```
 
@@ -184,11 +184,10 @@ e <- ggplot(data = sexBoundaries,
 ) + geom_bar(alpha = 0.5) +
   labs(
     title = "3. Talked to an Ex about whether they pushed a partner too far",
-    x = "Talked to an Ex about whether they pushed a partner too far",
     y = "Count",
     fill = "Talked to an Ex about whether they pushed a partner too far"
   ) + 
-  theme(legend.position = "none")
+  theme(legend.position = "none", axis.title.x = element_blank())
 print(e)
 ```
 
@@ -202,11 +201,10 @@ f <- ggplot(data = sexBoundaries,
 ) + geom_bar(alpha = 0.5) +
   labs(
     title = "4. Didn't do any of the above",
-    x = "Didn't do any of the above",
     y = "Count",
     fill = "Didn't do any of the above"
   ) + 
-  theme(legend.position = "none")
+  theme(legend.position = "none", axis.title.x = element_blank())
 print(f)
 ```
 
